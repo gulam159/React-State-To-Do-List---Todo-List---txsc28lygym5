@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import "./../styles/App.css";
 
-function App() 
-{
+function App(){
+  const [input, setInput] = useState("");
+  const [data, setData] = useState([]);
+  const [selectedData, setSelectedData] = useState("");
+  
+    function getInput(e) {
+    setInput(e.target.value);
+  }
+
+  function addData() {
+    if (input) {
+      if (selectedData) {
+        const copyData = [...data];
+        const index = copyData.findIndex((item) => item.id == selectedData.id);
+        copyData[index] = { ...copyData[index], title: input };
+        setData(copyData);
+        setSelectedData("");
+      } else {
+        setData([...data, { id: data.length, title: input }]);
+      }
+      setInput("");
+    }
+  }
+  function DeletData(id) {
+    const filteredItems = data.filter((item) => item.id != id);
+    setData(filteredItems);
+  }
+
+  function EditData(item) {
+    setSelectedData(item);
+    setInput(item.title);
+  }
+
 	return (
 	<div id="main">
-	//Do not alter main div
-	//Please do not alter the functional component as tests depend on the type of component.
+	<textarea id="task" value={input} onChange={getInput} cols="20" rows="1"></textarea>
+	<button id="btn" onClick={addData}>Add</button>
+	<ul>
+        {data.map((item) => (
+        <div key={item.id}>
+            <li className="list">{item.title}</li>
+		<button className="delete" onClick={() => DeletData(item.id)}>Delete</button>
+            	<button className="edit" onClick={() => EditData(item)}>Edit</button>
+	</div>
+        ))}
+      </ul>
 	</div>
 	);
 }
