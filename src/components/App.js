@@ -11,7 +11,9 @@ function App(){
   }
 
   function addData() {
-    if (input) {
+   if(!input || /^\s*$/.test(input)) {
+      return;
+    } else if(input) {
       if (selectedData) {
         const copyData = [...data];
         const index = copyData.findIndex((item) => item.id == selectedData.id);
@@ -30,6 +32,9 @@ function App(){
   }
 
   function EditData(item) {
+	  if (!item && /^\s*$/.test(item)) {
+      return;
+    }
     setSelectedData(item);
     setInput(item.title);
   }
