@@ -26,12 +26,12 @@ function App(){
       setInput("");
     }
   }
-  function DeletData(id) {
+  function deletData(id) {
     const filteredItems = data.filter((item) => item.id != id);
     setData(filteredItems);
   }
 
-  function EditData(item) {
+  function editData(item) {
 	  if (!item && /^\s*$/.test(item)) {
       return;
     }
@@ -47,8 +47,8 @@ function App(){
         {data.map((item) => (
         <div key={item.id}>
             <li className="list">{item.title}</li>
-		<button className="delete" onClick={() => DeletData(item.id)}>Delete</button>
-            	<button className="edit" onClick={() => EditData(item)}>Edit</button>
+		<button className="delete" onClick={() => deletData(item.id)}>Delete</button>
+            	<button className="edit" onClick={() => editData(item)}>Edit</button>
 	</div>
         ))}
       </ul>
